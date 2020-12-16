@@ -1,9 +1,16 @@
-{% extends base.html %}
+{% extends "base.html" %}
 
 {% block content %}
+    <p>What is the secret number between 1 and 30?</p>
 
+    <form method="post" action="/result">
+        Guess: <input type="number" name="guess">
 
+        <button type="submit" value="Submit">Submit</button>
+    </form>
 
+    <p>{{message}}</p>
 
+    <a href="/">Back to guessing</a>
 
 {% endblock content %}

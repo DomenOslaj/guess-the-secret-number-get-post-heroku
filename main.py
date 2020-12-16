@@ -17,16 +17,28 @@ def index():
     return response
 
 
-@app.route("/result.html", methods=["PUSH"])
+@app.route("/result", methods=["POST"])
 def result():
     guess = int(request.form.get("guess"))
     secret_num = int(request.cookies.get("secret_num"))
 
-    if guess == secret_num:
-        message = "Correct! Secret number is {0}!" .format(str("secret_num"))
-        response = make_response(render_template("result.html", message=message))
-        response.set.cookie(str(random.randint(0, 29)))
+    if guess > 30 or guess < 1:
+        message = "Just numbers between 1 and 30!"
+        return render_template("result.html", message=message)
 
+    elif guess == secret_num:
+        message = "Correct! Secret number is {0}!" .format(str(secret_num))
+        response = make_response(render_template("result.html", message=message))
+        response.set_cookie("secret_num", str(random.randint(0, 29)))
+        return response
+
+    elif guess > secret_num:
+        message = "Not correct, try something smaller!"
+        return render_template("result.html", message=message)
+
+    elif guess < secret_num:
+        message = "Not correct, try something bigger!"
+        return render_template("result.html", message=message)
 
 
 if __name__ == '__main__':
