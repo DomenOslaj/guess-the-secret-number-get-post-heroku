@@ -8,7 +8,8 @@ app = Flask(__name__)
 def index():
     secret_num = request.cookies.get("secret_num")    # check if secret num already exists in a cookie
 
-    response = make_response(render_template("index.html")) # response holds the cookie, server sends it to the users browser
+    response = make_response(render_template("index.html"))  # response holds the cookie, server sends it to the users
+                                                             # browser
 
     if not secret_num:
         new_secret = str(random.randint(0, 29))
@@ -16,5 +17,6 @@ def index():
 
     return response
 
-@app.route("/result", methods=["POST"])
-def result():
+
+if __name__ == '__main__':
+    app.run(debug=True)
